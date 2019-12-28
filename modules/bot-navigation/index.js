@@ -1,6 +1,7 @@
 const RootOption = require("./root/index");
 const Context = require("./context");
 const settings = require("./../config");
+const api = require("node-vk-bot-api/lib/api");
 
 const BotNavigation = function(bot) {
   let context = new Context(bot);
@@ -36,6 +37,25 @@ const BotNavigation = function(bot) {
       if (chattedContext.sendSpam) {
         const text = ctx && ctx.message && ctx.message.text;
         if (text) {
+          let response;
+          // response = await bot.execute("groups.getMembers", {
+          //   group_id: 190290420,
+          //   count: 10
+          // });
+
+          // console.log(response);
+
+          response = await bot.execute("users.get", {
+            user_ids: 35549534
+          });
+
+          console.log(response);
+
+          response = await api("users.get", {
+            user_ids: 35549534,
+            access_token: settings.get("credentials.bot.access_token")
+          });
+
           bot.sendMessage(vkId, text);
         }
       }
