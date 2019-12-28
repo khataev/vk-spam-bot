@@ -1,5 +1,6 @@
 const RootOption = require("./root/index");
 const Context = require("./context");
+const settings = require("./../config");
 
 const BotNavigation = function(bot) {
   let context = new Context(bot);
@@ -9,6 +10,12 @@ const BotNavigation = function(bot) {
     ctx.reply(...(await rootOption.reply(ctx)));
     await context.findOrCreateAccount(ctx);
     rootOption.registerReplies(ctx);
+  });
+
+  // TODO: refactor
+  const adminId = settings.get("shared.admins")[0] || 0;
+  rootOption.registerReplies({
+    message: { from_id: adminId }
   });
 
   // TODO: refactor

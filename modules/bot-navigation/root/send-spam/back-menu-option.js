@@ -25,7 +25,7 @@ class BackMenuOption extends MenuOption {
 
   // TODO: possibly, need to override (for different back buttons)
   get triggerButton() {
-    return "return_to_root_3_button";
+    return "return_to_root_button";
   }
 }
 

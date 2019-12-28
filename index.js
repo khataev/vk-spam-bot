@@ -12,7 +12,7 @@ let bot;
 
 function start_express_server() {
   if (settings.get("env") === "production") {
-    logger.warn("start_express_server");
+    console.warn("start_express_server");
     let app = express(),
       groupId = settings.get("credentials.vk.group_id");
 
@@ -24,15 +24,11 @@ function start_express_server() {
       res.json({ version: packageInfo.version });
     });
 
-    configureQiwiHook(app, groupId);
-    configureVkCoinHook(app, groupId);
-    // configureRootHook(app, groupId);
-
     if (settings.get("credentials.bot.use_webhooks")) {
-      logger.info("BOT mode: webhooks");
+      console.info("BOT mode: webhooks");
       bot = configure_bot_webhooks(app, groupId);
     } else {
-      logger.info("BOT mode: long polling");
+      console.info("BOT mode: long polling");
       bot = configure_bot_polling(app, groupId);
     }
 
@@ -83,17 +79,11 @@ function configure_bot(bot) {
 }
 
 async function debug_run() {
-  const Account = require("./db/models").Account;
-
   bot = new VkBot({
     token: settings.get("credentials.bot.access_token"),
     group_id: settings.get("credentials.vk.group_id")
   });
   nav = new BotNavigation(bot);
-  // await nav.getUrl();
-
-  // const account = await Account.findOne({ where: { vkId: "" } });
-  // await rubFinances.withdrawMoney(account, "");
 }
 
 // debug_run();
