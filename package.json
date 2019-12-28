@@ -1,0 +1,18 @@
+{
+  "name": "vk-spam-bot",
+  "version": "1.0.0",
+  "description": "Vk spam pr organizer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrey Khataev (khataev@yandex.ru)",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "convict": "^4.4.1",
+    "express": "^4.16.4",
+    "node-vk-bot-api": "^2.4.8"
+  }
+}

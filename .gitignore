@@ -1,0 +1,4 @@
+/.idea
+config/development.json
+*.log
+node_modules
