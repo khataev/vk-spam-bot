@@ -15,6 +15,21 @@ class ApiMethods {
     }
   }
 
+  static async messagesSend(userId, message) {
+    const settings = require("./config");
+    const api = require("node-vk-bot-api/lib/api");
+    try {
+      await api("messages.send", {
+        access_token: settings.get("credentials.vk.client_access_token"),
+        user_id: userId,
+        message: message,
+        random_id: Date.now()
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   static sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
   }

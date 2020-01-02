@@ -37,9 +37,41 @@ const BotNavigation = function(bot) {
       if (chattedContext.sendSpam) {
         const text = ctx && ctx.message && ctx.message.text;
         if (text) {
-          let response = await apiMethods.getGroupMembers("vkcoinqitix", 1);
-          const members = response.items;
-          members.forEach(memberVkId => bot.sendMessage(memberVkId, text));
+          let response = await apiMethods.getGroupMembers(170260355, 1000);
+          // const members = [
+          //   35549534,
+          //   506750342,
+          //   468240791,
+          //   341313305,
+          //   202701313,
+          //   546930532,
+          //   489528558,
+          //   403539329,
+          //   449385818,
+          //   328068939,
+          //   518759500,
+          //   470179868,
+          //   558203823
+          // ];
+          let members = [162187337, 294932462];
+          console.log("Found members:", members);
+
+          // let members = response.items.slice(0, 100);
+          // await bot.sendMessage(members, text);
+
+          // members = response.items.slice(100);
+          // await bot.sendMessage(members, text);
+
+          for (let i = 0; i < members.length; i++) {
+            let memberVkId = members[i];
+            console.log(`Sending message (${text}) to ${memberVkId}`);
+            try {
+              await bot.sendMessage(memberVkId, text);
+              // await apiMethods.sleep(100);
+            } catch (e) {
+              console.log("hmmm:", e.message);
+            }
+          }
         }
       }
       return;
