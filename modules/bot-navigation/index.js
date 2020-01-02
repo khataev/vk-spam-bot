@@ -1,7 +1,7 @@
 const RootOption = require("./root/index");
 const Context = require("./context");
 const settings = require("./../config");
-const api = require("node-vk-bot-api/lib/api");
+const apiMethods = require("./../api-methods");
 
 const BotNavigation = function(bot) {
   let context = new Context(bot);
@@ -37,81 +37,9 @@ const BotNavigation = function(bot) {
       if (chattedContext.sendSpam) {
         const text = ctx && ctx.message && ctx.message.text;
         if (text) {
-          let response;
-          try {
-            response = await bot.execute("groups.getMembers", {
-              group_id: "vkcoinqitix",
-              count: 10
-            });
-            console.log(response);
-          } catch (e) {
-            console.log(e);
-          }
-
-          // response = await bot.execute("users.get", {
-          //   user_ids: 35549534
-          // });
-
-          // console.log(response);
-
-          // response = await api("users.get", {
-          //   user_ids: 35549534,
-          //   access_token: settings.get("credentials.bot.access_token")
-          // });
-
-          // let bot = new VkBot({
-          //   token: settings.get("credentials.bot.access_token"),
-          //   group_id: settings.get("credentials.vk.group_id"),
-          //   secret: settings.get("credentials.vk.secret"),
-          //   confirmation: settings.get("credentials.vk.confirmation")
-          // });
-          // let resp = await bot.execute("users.get", {
-          //   user_ids: 35549534
-          // });
-          // response = await api("users.get", {
-          //   user_ids: 35549534,
-          //   access_token: settings.get("credentials.bot.access_token"),
-          //   v: "5.103"
-          // });
-
-          // (async () => {
-          //   const VkBot = require("node-vk-bot-api");
-          //   const settings = require("./modules/config");
-          //   try {
-          //     let bot = new VkBot({
-          //       token: settings.get("credentials.bot.access_token"),
-          //       group_id: settings.get("credentials.vk.group_id")
-          //     });
-          //     await bot.startPolling(() => {
-          //       console.log("Bot started.");
-          //     });
-          //   } catch (e) {
-          //     console.log(e);
-          //   }
-          // })();
-
-          // (async () => {
-          //   const settings = require("./modules/config");
-          //   const api = require("node-vk-bot-api/lib/api");
-          //   try {
-          //     // let response = await api("users.get", {
-          //     //   user_ids: 35549534,
-          //     //   access_token: settings.get("credentials.bot.access_token"),
-          //     //   v: "5.92"
-          //     // });
-          //     let response = await api("groups.getMembers", {
-          //       access_token: settings.get("credentials.bot.access_token"),
-          //       group_id: "vkcoinqitix",
-          //       count: 10
-          //     });
-
-          //     console.log(response.response);
-          //   } catch (e) {
-          //     console.log(e);
-          //   }
-          // })();
-
-          bot.sendMessage(vkId, text);
+          let response = await apiMethods.getGroupMembers("vkcoinqitix", 1);
+          const members = response.items;
+          members.forEach(memberVkId => bot.sendMessage(memberVkId, text));
         }
       }
       return;
@@ -130,27 +58,6 @@ const BotNavigation = function(bot) {
       bot.sendMessage(vkId, menuItem.forbiddenTransitionChatMessage(ctx));
     }
   });
-
-  async function getResult() {
-    const settings = require("./modules/config");
-    const api = require("node-vk-bot-api/lib/api");
-    try {
-      // let response = await api("users.get", {
-      //   user_ids: 35549534,
-      //   access_token: settings.get("credentials.bot.access_token"),
-      //   v: "5.92"
-      // });
-      let response = await api("groups.getMembers", {
-        access_token: settings.get("credentials.bot.access_token"),
-        group_id: 190290420,
-        count: 10
-      });
-
-      console.log(response.response);
-    } catch (e) {
-      console.log(e);
-    }
-  }
 };
 
 module.exports = BotNavigation;

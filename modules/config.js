@@ -50,11 +50,11 @@ const config = convict({
         default: "",
         env: "CREDENTIALS_VK_CONFIRMATION"
       },
-      utils_short_link_url: {
-        doc: "Short link url api",
-        format: "url",
+      client_access_token: {
+        doc: "Client access token",
+        format: String,
         default: "",
-        env: "CREDENTIALS_VK_UTILS_SHORT_LINK_URL"
+        env: "CREDENTIALS_VK_CLIENT_ACCESS_TOKEN"
       }
     }
   },

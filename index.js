@@ -24,7 +24,7 @@ function start_express_server() {
       res.json({ version: packageInfo.version });
     });
 
-    app.get("/client_token", getClientAccessToken);
+    // app.get("/client_token", getClientAccessToken);
 
     if (settings.get("credentials.bot.use_webhooks")) {
       console.info("BOT mode: webhooks");
@@ -78,11 +78,6 @@ function configure_bot(bot) {
   const session = new Session();
   bot.use(session.middleware());
   nav = new BotNavigation(bot);
-}
-
-function getClientAccessToken(req, res) {
-  console.log("getClientAccessToken");
-  res.json({ hello: "world!" });
 }
 
 async function debug_run() {
